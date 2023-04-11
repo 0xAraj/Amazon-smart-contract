@@ -14,6 +14,7 @@ contract Amazon {
     }
 
     mapping(uint => Product) public product;
+    mapping(address => Product[]) public myProducts;
     mapping(uint => mapping(address => uint)) public amountOfPurchasedProducts;
     uint productId = 1;
     uint checkReentrancy = 1;
@@ -32,6 +33,7 @@ contract Amazon {
         newProduct.price = _price * 1 ether;
         newProduct.stock = _stock;
         newProduct.seller = payable(msg.sender);
+        myProducts[msg.sender].push(newProduct);
 
         product[productId] = newProduct;
         productId++;
